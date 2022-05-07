@@ -1,0 +1,37 @@
+body {
+  background-color: #383838;
+}
+h1 {
+  color: gainsboro;
+  text-indent: 10%
+}
+h2 {
+  color: gainsboro;
+  text-indent: 10%
+}
+h3 {
+  color: gainsboro;
+  text-indent: 5%
+}
+h4 {
+  color: gainsboro;
+  text-indent: 10%
+}
+p {
+  color: gainsboro;
+  text-indent: 10%
+}
+li {
+  color: #8a8a8a;
+}
+#msgInContainer {
+  position: absolute;
+  bottom: 0px;
+}
+#msgInp1 {
+  color: gainsboro;
+}
+
+.g_id_signin {
+  float: right;
+}

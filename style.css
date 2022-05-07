@@ -1,0 +1,32 @@
+body {
+  background-image: url("imgs/bg.webp");
+  background-color: #cccccc;
+}
+h2 {
+  color: gainsboro;
+  text-indent: 10%
+}
+h3 {
+  color: gainsboro;
+  text-indent: 5%
+}
+h4 {
+  color: gainsboro;
+  text-indent: 10%
+}
+h5 {
+  color: gainsboro;
+  text-indent: 15%
+}
+
+#greatFSchoolText {
+  color: gainsboro;
+  text-indent: 15%
+}
+.btn btn-primary {
+  position: relative;
+  left: 400px;
+}
+#header {
+  color: gainsboro;
+}
