@@ -1,8 +1,22 @@
 let gIntr;
 var prMsg = "placeholder";
-let gUserName = "p"
+let gUserName = "p";
+var listLength;
+var cdt = new Date();
+let parsedID;
 
 //Functions
+
+function genSalt(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()(_+{}|:""<>?';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
+}
 
 function onSignIn(googleUser) {
   const profile = googleUser.getBasicProfile();
@@ -15,8 +29,19 @@ function gLogIn(token) {
   let jwtDecoded = jwt_decode(credential);
   console.log(jwtDecoded);
   gUserName = jwtDecoded.name;
-  $("#msgInp1" ).attr('disabled', 'disabled');
-  $("#msgInp1").val(gUserName);
+}
+
+function genUId() {
+  let currentTime = cdt.getTime();
+  let salt = genSalt(4);
+  let checksum = CRC32.str(currentTime + salt);
+  let uID = salt + "," + currentTime + "," + checksum;
+  return uID
+}
+
+function parseUID(id) {
+  parsedID = id.split(',');
+  console.log(parsedID);
 }
 
 function resetTBox() {
@@ -43,7 +68,7 @@ $("#msgForm").on("submit", function(event) {
   newMsg = newMsg.replace('<', '&#60;');
   newMsg = newMsg.replace('>', '&#62;');
   //Impersonation prevention
-  //newMsg = newMsg.replace('✔', '');
+  newMsg = newMsg.replace('<img id="verified" src="/imgs/verif\iedEnZon3.png" width="14" height="14" />', '');
 
   resetTBox();
   
@@ -55,12 +80,17 @@ $("#msgForm").on("submit", function(event) {
     function(data, status){
       $("#chatContainer").append("<li>" + newMsg + "</li>");
       prMsg = newMsg;
+      listLength = $('#chatContainer ul li').length;
       if(listLength >= 35) {
         $('#chatContainer li').first().remove();
       }
     });
     } else if (gUserName != "EnZon3") {
       $("#chatContainer").append("<li>" + "Please log in" + "</li>");
+      listLength = $('#chatContainer ul li').length;
+      if(listLength >= 35) {
+        $('#chatContainer li').first().remove();
+      }
     } else {
       newMsg = newMsg + ' <img id="verified" src="/imgs/verif\iedEnZon3.png" width="14" height="14" />';
       $.post("https://NodeChatAPI.enzon3.repl.co/post/setMsg",
@@ -70,10 +100,9 @@ $("#msgForm").on("submit", function(event) {
       function(data, status){
         $("#chatContainer").append("<li>" + newMsg + "</li>");
         prMsg = newMsg;
+        listLength = $('#chatContainer ul li').length;
         if(listLength >= 35) {
             $('#chatContainer li').first().remove();
-          }
-          });
         }
       });
     }
@@ -132,8 +161,7 @@ function getMsg() {
       } else {
           prMsg = data;
           $("#chatContainer").append("<li>" + data + "</li>");
-          var list = $('#chatContainer li'),
-          listLength = list.length;
+          listLength = $('#chatContainer ul li').length;
           if(listLength >= 35) {
             $('#chatContainer li').first().remove();
           }
