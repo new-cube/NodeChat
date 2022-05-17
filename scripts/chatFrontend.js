@@ -19,6 +19,10 @@ $("#msgForm").on("submit", function(event) {
   //XSS patch
   newMsg = newMsg.replace('<', '&#60;');
   newMsg = newMsg.replace('>', '&#62;');
+  newMsg = newMsg.replace('<', '&#60;');
+  newMsg = newMsg.replace('>', '&#62;');
+  newMsg = newMsg.replace('<', '&#60;');
+  newMsg = newMsg.replace('>', '&#62;');
   //Impersonation prevention
   newMsg = newMsg.replace('<img id="verified" src="/imgs/verif\iedEnZon3.png" width="14" height="14" />', '');
   //Bypass prevention
