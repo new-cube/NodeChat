@@ -15,6 +15,15 @@ $("#msgForm").on("submit", function(event) {
 
   var newMsg = usr + ": " + msg;
 
+  newMsg = newMsg.replace('<img id="verified" src="/imgs/verif\iedEnZon3.png" width="14" height="14" />', '');
+  //XSS patch
+  newMsg = newMsg.replace('<', '&#60;');
+  newMsg = newMsg.replace('>', '&#62;');
+  //Impersonation prevention
+  newMsg = newMsg.replace('<img id="verified" src="/imgs/verif\iedEnZon3.png" width="14" height="14" />', '');
+  //Bypass prevention
+  newMsg = newMsg.replace('&', '&#38;');
+
   if(usr != "Announcement") {
   $.post("https://NodeChatAPI.enzon3.repl.co/post/setMsg",
   {

@@ -35,7 +35,7 @@ function genUId() {
   let currentTime = cdt.getTime();
   let salt = genSalt(4);
   let checksum = CRC32.str(currentTime + salt);
-  let uID = salt + "," + currentTime + "," + checksum;
+  let uID = salt + ":" + currentTime + ":" + checksum;
   return uID
 }
 
@@ -69,6 +69,8 @@ $("#msgForm").on("submit", function(event) {
   newMsg = newMsg.replace('>', '&#62;');
   //Impersonation prevention
   newMsg = newMsg.replace('<img id="verified" src="/imgs/verif\iedEnZon3.png" width="14" height="14" />', '');
+  //Bypass prevention
+  newMsg = newMsg.replace('&', '&#38;');
 
   resetTBox();
   
