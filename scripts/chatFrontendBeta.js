@@ -91,8 +91,7 @@ $("#msgForm").on("submit", function(event) {
     function(data, status){
       $("#chatContainer").append("<li>" + newMsg + "</li>");
       prMsg = newMsg;
-      listLength = $('#chatContainer ul li').length;
-      if(listLength >= 35) {
+      if($("li").length >= 35) {
         $('#chatContainer li').first().remove();
       }
     });
@@ -113,8 +112,7 @@ $("#msgForm").on("submit", function(event) {
       function(data, status){
         $("#chatContainer").append("<li>" + newMsg + "</li>");
         prMsg = newMsg;
-        listLength = $('#chatContainer ul li').length;
-        if(listLength >= 35) {
+        if($("li").length >= 35) {
             $('#chatContainer li').first().remove();
         }
       });
@@ -174,8 +172,7 @@ function getMsg() {
       } else {
           prMsg = data;
           $("#chatContainer").append("<li>" + data + "</li>");
-          listLength = $('#chatContainer ul li').length;
-          if(listLength >= 35) {
+          if($("li").length >= 35) {
             $('#chatContainer li').first().remove();
           }
       }
