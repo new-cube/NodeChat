@@ -31,7 +31,7 @@ function gLogIn(token) {
   gUserName = jwtDecoded.name;
 }
 
-function genUId() {
+function genUID() {
   let currentTime = cdt.getTime();
   let salt = genSalt(4);
   let checksum = CRC32.str(currentTime + salt);
@@ -54,6 +54,10 @@ $( document ).ready(function() {
       gIntr = setInterval(getMsg, 5000);
   }
 
+  UID = genUID();
+  
+  idCookieHandler(UID);
+
 //Message posting.
   
 $("#msgForm").on("submit", function(event) {
@@ -63,14 +67,13 @@ $("#msgForm").on("submit", function(event) {
   var $msg = $("#msgInp2"); 
   var msg = $msg.val();
 
+  var pUID = Cookies.get('uID')
+  addIDToDB(pUID, usr);
+
   var newMsg = usr + ": " + msg;
   //XSS patch
-  newMsg = newMsg.replace('<', '&#60;');
-  newMsg = newMsg.replace('>', '&#62;');
-  newMsg = newMsg.replace('<', '&#60;');
-  newMsg = newMsg.replace('>', '&#62;');
-  newMsg = newMsg.replace('<', '&#60;');
-  newMsg = newMsg.replace('>', '&#62;');
+  //newMsg = newMsg.replace('<', '&#60;');
+  //newMsg = newMsg.replace('>', '&#62;');
   //Impersonation prevention
   newMsg = newMsg.replace('<img id="verified" src="/imgs/verif\iedEnZon3.png" width="14" height="14" />', '');
   //Bypass prevention
@@ -82,6 +85,8 @@ $("#msgForm").on("submit", function(event) {
     $.post("https://NodeChatAPI.enzon3.repl.co/post/setMsg",
     {
       data: newMsg,
+      id: pUID,
+      username: usr,
     },
     function(data, status){
       $("#chatContainer").append("<li>" + newMsg + "</li>");
@@ -102,6 +107,8 @@ $("#msgForm").on("submit", function(event) {
       $.post("https://NodeChatAPI.enzon3.repl.co/post/setMsg",
       {
         data: newMsg,
+        id: pUID,
+        username: usr,
       },
       function(data, status){
         $("#chatContainer").append("<li>" + newMsg + "</li>");

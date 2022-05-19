@@ -8,7 +8,7 @@ function idCookieHandler(id) {
 }
 
 function checkBan(id) {
-  $.post("https://nodechatapi.enzon3.repl.co/misc/banStatus",
+  $.get("https://nodechatapi.enzon3.repl.co/misc/banStatus",
   {
     id: id,
   },
@@ -30,5 +30,6 @@ function addIDToDB(id, username) {
     function(data, status){
       console.log(`id added to db with response of ${data}; and a status of ${status}`)
     });
+    Cookies.set('idAlreadyAdded', true, { expires: 7 })
   }
 }
